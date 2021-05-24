@@ -10,33 +10,24 @@ export default function App() {
   const [lastNumber, setLastNumber] = useState("")
   const[dot, setDot] = useState(false)
   useEffect( () => {
-  }, [dot]);
+  }, [dot,currentNumber, result,operadorType]);
 
   function calculator(){
     const splitNumbers = currentNumber.split(' ')
-    const fistNumber = parseFloat(splitNumbers[0])
-    const lastNumber = parseFloat(splitNumbers[2])
-    const operator = splitNumbers[1]
-
-    // Faz ação referente tecla pressionada
-    switch(operator){
-      case '+':
-        setCurrentNumber((fistNumber + lastNumber).toString())
-        return
-      case '-': 
-        setCurrentNumber((fistNumber - lastNumber).toString())
-        return
-      case '*':
-        setCurrentNumber((fistNumber * lastNumber).toString())
-        return
-      case '/': 
-        setCurrentNumber((fistNumber / lastNumber).toString())
-        return
-    }
+    let firstNumber = parseFloat(splitNumbers[0])
+    let lastNumber = parseFloat(splitNumbers[2])
+   if(operadorType!=='%'){
+    setResult(parseFloat(eval(currentNumber)))
+   }
+   else{
+   setResult((firstNumber * (lastNumber/100)).toString())
+  }
+   setCurrentNumber('')
   }
 
   function handleInput(buttonPressed){
     console.log(buttonPressed) // Mostra no Console a tecla pressionada
+    
     if(buttonPressed==='.'){
       if(dot){
         return
@@ -44,11 +35,34 @@ export default function App() {
         setDot(true)
        }
      }
-
-    if(buttonPressed === '+' | buttonPressed === "-" | buttonPressed === "*" | buttonPressed === "/" ){
-      setCurrentNumber(currentNumber + " " + buttonPressed + " ")
-      return
+     switch(buttonPressed){
+      case'+':
+        setOperadorType('+')
+      break
+      case'-':
+        setOperadorType('-')
+        break
+      case'*':
+      setOperadorType('*')
+      break
+    case'/':
+    setOperadorType('/')
+    break
+    case'%':
+    setOperadorType('%')
+    break
     }
+
+    if(buttonPressed === '+' | buttonPressed === "-" | buttonPressed === "*" | buttonPressed === "/" 
+    | buttonPressed === "%" && currentNumber===''){
+    setCurrentNumber(result + " " + buttonPressed + " ")
+    }else if(buttonPressed === '+' | buttonPressed === "-" | buttonPressed === "*" | buttonPressed === "/" 
+        | buttonPressed === "%" &&currentNumber
+         ){
+          setCurrentNumber(currentNumber + " " + buttonPressed + " ")
+          setDot(false)
+          return
+        }
     switch(buttonPressed){
       case 'DEL':
         setCurrentNumber(currentNumber.substring(0, (currentNumber.length - 1)))
