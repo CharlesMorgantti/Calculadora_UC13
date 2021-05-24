@@ -102,6 +102,105 @@ export default function App() {
         setDot(false)
         return
       case '+/-':
+        let myStr=currentNumber.trim()
+      
+        if(myStr.charAt(myStr.length-1).includes('*')){return}
+        if(myStr.charAt(myStr.length-1).includes('/')){return}
+
+        switch(operadorType){
+          case '+':
+            if(myStr===''&&result.toString().includes('-')){
+             myStr=result.toString()
+             myStr=  myStr.split('').reverse().join('').replace('-', '').split('').reverse().join('')
+            setCurrentNumber(myStr)  
+              return
+            }
+            if(myStr.length===1){
+              setCurrentNumber('-' +myStr)
+              setOperadorType('-')
+              return
+            }
+            if(myStr===''&&result!==0){
+              setCurrentNumber('- '+ result)
+              setOperadorType('-')
+              return
+            }
+            
+            let lIndex  = myStr.lastIndexOf("+");
+            let last = myStr.substring(lIndex+1,currentNumber.length)
+            myStr=myStr.substring(0,lIndex)+'-'+last
+            setCurrentNumber(myStr)
+            setOperadorType('-')
+            return
+            case '-':
+              if(myStr.length===1&&myStr.includes('-')){
+                setCurrentNumber('+')
+              }
+              if(myStr===''&&result!==0){
+               let result1 =result.toString().trim()
+                lIndex  = result1.lastIndexOf("-");
+                last = result1.substring(lIndex+1,result1.length)
+                setCurrentNumber(last)
+                setOperadorType('+')
+                return
+              }
+               lIndex  = myStr.lastIndexOf("-");
+                 last = myStr.substring(lIndex+1,currentNumber.length)
+                myStr=myStr.substring(0,lIndex)+'+'+last
+                setCurrentNumber(myStr)
+                setOperadorType('+')
+                return
+                case '*':
+                  if(myStr===''&&result.toString().charAt(0).includes('-')){
+                     myStr=result.toString()
+                     myStr=myStr.replace('-','')
+                     setCurrentNumber(myStr)
+                     setOperadorType('+')
+                     return
+                   }
+                   if(myStr===''&&!result.toString().charAt(0).includes('-')){
+                    myStr=result.toString()
+                    setCurrentNumber('- '+myStr)
+                    setOperadorType('-')
+                    return
+                  }
+                  lIndex  = myStr.lastIndexOf("*");
+                    last = myStr.substring(lIndex+1,currentNumber.length)
+                 if(myStr.charAt(myStr.length-1).includes(')')){
+                myStr=  myStr.split('').reverse().join('')
+                 .replace('-', '').replace('(','').replace(')','')
+                 .split('').reverse().join('')
+                }else{
+                  myStr=myStr.substring(0,lIndex)+'*(-'+last+')'
+                }
+                    setCurrentNumber(myStr)
+                   return
+                   case '/':
+                    if(myStr===''&&result.toString().charAt(0).includes('-')){
+                         myStr=result.toString()
+                         myStr=myStr.replace('-','')
+                         setCurrentNumber(myStr)
+                         setOperadorType('+')
+                         return
+                       }
+                       if(myStr===''&&!result.toString().charAt(0).includes('-')){
+                        myStr=result.toString()
+                        setCurrentNumber('- '+myStr)
+                        setOperadorType('-')
+                        return
+                      }
+                    lIndex  = myStr.lastIndexOf("/");
+                      last = myStr.substring(lIndex+1,currentNumber.length)
+                    if(myStr.charAt(myStr.length-1).includes(')')){
+                      myStr=  myStr.split('').reverse().join('')
+                      .replace('-', '').replace('(','').replace(')','')
+                      .split('').reverse().join('')
+                   }else{
+                     myStr=myStr.substring(0,lIndex)+'/(-'+last+')'
+                   }
+                     setCurrentNumber(myStr)
+                     return   
+        }
         return
     }
 
