@@ -28,6 +28,19 @@ export default function App() {
   function handleInput(buttonPressed){
     console.log(buttonPressed) // Mostra no Console a tecla pressionada
     
+    if(buttonPressed === '+' | buttonPressed === "-" | buttonPressed === "*" | buttonPressed === "/" 
+    | buttonPressed === "%"){
+           
+    if(myStr.charAt(myStr.length-1).includes('+')|
+    myStr.charAt(myStr.length-1).includes('-')|
+    myStr.charAt(myStr.length-1).includes('*')|
+    myStr.charAt(myStr.length-1).includes('/')|
+    myStr.charAt(myStr.length-1).includes('%')
+    ){
+    return
+    } 
+    }
+
     if(buttonPressed==='.'){
       if(dot){
         return
