@@ -35,6 +35,17 @@ export default function App() {
         setDot(true)
        }
      }
+
+     if(buttonPressed ===0 && currentNumber.length ===0
+      |myStr.charAt(myStr.length-1).includes('+') 
+      |myStr.charAt(myStr.length-1).includes('-') 
+      |myStr.charAt(myStr.length-1).includes('*') 
+      |myStr.charAt(myStr.length-1).includes('/') 
+      |myStr.charAt(myStr.length-1).includes('%') 
+      ){
+      return
+     }
+
      switch(buttonPressed){
       case'+':
         setOperadorType('+')
@@ -81,8 +92,14 @@ export default function App() {
         return
     }
 
-    setCurrentNumber(currentNumber + buttonPressed)
-  }
+   if(buttonPressed === '+' | buttonPressed === "-" | buttonPressed === "*" | buttonPressed === "/" 
+  | buttonPressed === "%"&& currentNumber===''){
+setCurrentNumber(result + " " + buttonPressed + " ")
+}
+else{
+  setCurrentNumber(currentNumber +''+ buttonPressed+'')
+}
+}
 
 
   return (
